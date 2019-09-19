@@ -22,6 +22,9 @@ function initVRM( gltf ) { // モデルが読み込まれたあとの処理
   THREE.VRM.from( gltf ).then( ( vrm ) => { // gltfをvrmにする
     scene.add( vrm.scene ); // gltfのモデルをsceneに追加
     currentVRM = vrm; // currentGLTFにgltfを代入
+
+    const head = vrm.humanoid.getBoneNode( THREE.VRMSchema.HumanoidBoneName.Head ); // vrmの頭を参照する
+    camera.position.set( 0.0, head.getWorldPosition(new THREE.Vector3()).y, 2.0 ); // カメラを頭が中心に来るように動かす
   } );
 }
 
