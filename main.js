@@ -1,7 +1,7 @@
 /* global THREE */
 
-const width = window.innerWidth;
-const height = window.innerHeight;
+const width = 640;//window.innerWidth;
+const height = 360;//window.innerHeight;
 
 // -- renderer -------------------------------------------------------------------------------------
 const renderer = new THREE.WebGLRenderer();
@@ -16,17 +16,19 @@ camera.position.set( 0.0, 0.0, 5.0 );
 const scene = new THREE.Scene();
 
 // -- avocado (gltf) -------------------------------------------------------------------------------
-let currentGLTF = undefined; // 現在使用中のgltf、update内で使えるようにするため
+let currentVRM = undefined; // 現在使用中のvrm、update内で使えるようにするため
 
-function initGLTF( gltf ) { // モデルが読み込まれたあとの処理
-  scene.add( gltf.scene ); // gltfのモデルをsceneに追加
-  currentGLTF = gltf; // currentGLTFにgltfを代入
+function initVRM( gltf ) { // モデルが読み込まれたあとの処理
+  THREE.VRM.from( gltf ).then( ( vrm ) => { // gltfをvrmにする
+    scene.add( vrm.scene ); // gltfのモデルをsceneに追加
+    currentVRM = vrm; // currentGLTFにgltfを代入
+  } );
 }
 
 const loader = new THREE.GLTFLoader(); // glTFモデルを読み込むにはGLTFLoaderを使う
 loader.load( // モデルを読み込む
   'https://cdn.glitch.com/e9accf7e-65be-4792-8903-f44e1fc88d68%2Fthree-vrm-girl.vrm?v=1568881824654', // モデルデータのURL
-  ( gltf ) => { initGLTF( gltf ); }, // モデルが読み込まれたあとの処理
+  ( gltf ) => { initVRM( gltf ); }, // モデルが読み込まれたあとの処理
   ( progress ) => { console.info( ( 100.0 * progress.loaded / progress.total ).toFixed( 2 ) + '% loaded' ); }, // モデル読み込みの進捗を表示
   ( error ) => { console.error( error ); } // モデル読み込み時のエラーを表示
 );
@@ -45,8 +47,8 @@ function update() {
 
   const delta = clock.getDelta();
 
-  if ( currentGLTF ) { // GLTFが読み込まれていれば
-    currentGLTF.scene.rotation.y += delta; // GLTFを回転する
+  if ( currentVRM ) { // VRMが読み込まれていれば
+    currentVRM.scene.rotation.y += delta; // VRMを回転する
   }
 
   renderer.render( scene, camera );
