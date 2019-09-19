@@ -1,7 +1,7 @@
 /* global THREE */
 
-const width = 640;//window.innerWidth;
-const height = 360;//window.innerHeight;
+const width = window.innerWidth;
+const height = window.innerHeight;
 
 // -- renderer -------------------------------------------------------------------------------------
 const renderer = new THREE.WebGLRenderer();
@@ -21,14 +21,14 @@ let currentVRM = undefined; // 現在使用中のvrm、update内で使えるよ�
 function initVRM( gltf ) { // モデルが読み込まれたあとの処理
   THREE.VRM.from( gltf ).then( ( vrm ) => { // gltfをvrmにする
     scene.add( vrm.scene ); // gltfのモデルをsceneに追加
-    currentVRM = vrm; // currentGLTFにgltfを代入
+    currentVRM = vrm; // currentGLTFにvrmを代入
 
     const head = vrm.humanoid.getBoneNode( THREE.VRMSchema.HumanoidBoneName.Head ); // vrmの頭を参照する
     camera.position.set( 0.0, head.getWorldPosition(new THREE.Vector3()).y, 2.0 ); // カメラを頭が中心に来るように動かす
   } );
 }
 
-const loader = new THREE.GLTFLoader(); // glTFモデルを読み込むにはGLTFLoaderを使う
+const loader = new THREE.GLTFLoader(); // vrmをGLTFLoaderで読み込む
 loader.load( // モデルを読み込む
   'https://cdn.glitch.com/e9accf7e-65be-4792-8903-f44e1fc88d68%2Fthree-vrm-girl.vrm?v=1568881824654', // モデルデータのURL
   ( gltf ) => { initVRM( gltf ); }, // モデルが読み込まれたあとの処理
