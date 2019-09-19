@@ -46,8 +46,8 @@ function update() {
 
   const delta = clock.getDelta();
 
-  if ( currentGLTF ) {
-    currentGLTF.scene.rotation.y += delta;
+  if ( currentGLTF ) { // GLTFが読み込まれていれば
+    currentGLTF.scene.rotation.y += delta; // GLTFを回転する
   }
 
   renderer.render( scene, camera );
