@@ -51,7 +51,9 @@ function update() {
   const delta = clock.getDelta();
 
   if ( currentVRM ) { // VRMが読み込まれていれば
-    currentVRM.scene.rotation.y += delta; // VRMを回転する
+    currentVRM.scene.rotation.y = Math.PI * Math.sin( clock.getElapsedTime() ); // VRMを回転する
+
+    currentVRM.update( delta ); // VRMの各コンポーネントを更新
   }
 
   renderer.render( scene, camera );
