@@ -20,13 +20,12 @@ let currentGLTF = undefined; // 現在使用中のgltf、update内で使える�
 
 function initGLTF( gltf ) { // モデルが読み込まれたあとの処理
   scene.add( gltf.scene ); // gltfのモデルをsceneに追加
-  gltf.scene.scale.set( 20.0, 20.0, 20.0 ); // 小さすぎるので大きさを20倍に
   currentGLTF = gltf; // currentGLTFにgltfを代入
 }
 
 const loader = new THREE.GLTFLoader(); // glTFモデルを読み込むにはGLTFLoaderを使う
 loader.load( // モデルを読み込む
-  'https://cdn.glitch.com/0a36e09b-3913-4217-902a-b2292d472997%2FAvocado.glb?v=1568864419285', // モデルデータのURL
+  'https://cdn.glitch.com/e9accf7e-65be-4792-8903-f44e1fc88d68%2Fthree-vrm-girl.vrm?v=1568881824654', // モデルデータのURL
   ( gltf ) => { initGLTF( gltf ); }, // モデルが読み込まれたあとの処理
   ( progress ) => { console.info( ( 100.0 * progress.loaded / progress.total ).toFixed( 2 ) + '% loaded' ); }, // モデル読み込みの進捗を表示
   ( error ) => { console.error( error ); } // モデル読み込み時のエラーを表示
