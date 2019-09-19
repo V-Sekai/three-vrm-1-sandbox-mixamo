@@ -16,10 +16,10 @@ camera.position.set( 0.0, 0.0, 5.0 );
 const scene = new THREE.Scene();
 
 // -- avocado (gltf) -------------------------------------------------------------------------------
-let currentVRM = undefined; // 現在使用中のvrm、update内で使えるようにするため
+let currentVRM = undefined;
 
-function initVRM( gltf ) { // モデルが読み込まれたあとの処理
-  THREE.VRM.from( gltf ).then( ( vrm ) => { // gltfをvrmにする
+function initVRM( gltf ) {
+  THREE.VRM.from( gltf ).then( ( vrm ) => {
     scene.add( vrm.scene ); // gltfのモデルをsceneに追加
     currentVRM = vrm; // currentGLTFにvrmを代入
 
