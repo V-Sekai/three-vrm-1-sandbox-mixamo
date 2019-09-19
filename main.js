@@ -9,7 +9,7 @@ renderer.setSize( width, height );
 document.body.appendChild( renderer.domElement );
 
 // -- camera ---------------------------------------------------------------------------------------
-const camera = new THREE.PerspectiveCamera( 30, width / height, 0.01, 20.0 );
+const camera = new THREE.PerspectiveCamera( 30.0, width / height, 0.01, 20.0 );
 camera.position.set( 0.0, 0.0, 5.0 );
 
 // -- scene ----------------------------------------------------------------------------------------
