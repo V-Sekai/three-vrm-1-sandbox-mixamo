@@ -1,7 +1,7 @@
 /* global THREE */
 
-const width = window.innerWidth;
-const height = window.innerHeight;
+const width = 900;
+const height = 300;
 
 // -- renderer -------------------------------------------------------------------------------------
 const renderer = new THREE.WebGLRenderer();
@@ -16,25 +16,37 @@ camera.position.set( 0.0, 0.0, 5.0 );
 const scene = new THREE.Scene();
 
 // -- vrm ------------------------------------------------------------------------------------------
-let currentVRM = undefined;
+let currentVRMs = [];
 
-function initVRM( gltf ) {
-  THREE.VRM.from( gltf ).then( ( vrm ) => {
-    scene.add( vrm.scene );
-    currentVRM = vrm;
+function initVRM( i, url ) {
+  const loader = new THREE.GLTFLoader();
+  loader.load(
+    'https://cdn.glitch.com/e9accf7e-65be-4792-8903-f44e1fc88d68%2Fthree-vrm-girl.vrm?v=1605264912635',
+    ( gltf ) => {
+      THREE.VRM.from( gltf ).then( ( vrm ) => {
+        scene.add( vrm.scene );
+        currentVRMs[ i ] = vrm;
 
-    const head = vrm.humanoid.getBoneNode( THREE.VRMSchema.HumanoidBoneName.Head );
-    camera.position.set( 0.0, head.getWorldPosition(new THREE.Vector3()).y, 2.0 );
-  } );
+        const head = vrm.humanoid.getBoneNode( THREE.VRMSchema.HumanoidBoneName.Head );
+        camera.position.set( 0.0, head.getWorldPosition(new THREE.Vector3()).y, 2.0 );
+      } );
+    },
+    ( progress ) => { console.info( ( 100.0 * progress.loaded / progress.total ).toFixed( 2 ) + '% loaded' ); },
+    ( error ) => { console.error( error ); }
+  );
 }
 
-const loader = new THREE.GLTFLoader();
-loader.load(
-  'https://cdn.glitch.com/e9accf7e-65be-4792-8903-f44e1fc88d68%2Fthree-vrm-girl.vrm?v=1605264912635',
-  ( gltf ) => { initVRM( gltf ); },
-  ( progress ) => { console.info( ( 100.0 * progress.loaded / progress.total ).toFixed( 2 ) + '% loaded' ); },
-  ( error ) => { console.error( error ); }
-);
+initVRM( 0, url, ( vrm ) => {
+  
+} );
+
+initVRM( 1, url, ( vrm ) => {
+  
+} );
+
+initVRM( 2, url, ( vrm ) => {
+  
+} );
 
 // -- light ----------------------------------------------------------------------------------------
 const light = new THREE.DirectionalLight( 0xffffff );
