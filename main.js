@@ -15,25 +15,25 @@ camera.position.set( 0.0, 0.0, 5.0 );
 // -- scene ----------------------------------------------------------------------------------------
 const scene = new THREE.Scene();
 
-// -- avocado (gltf) -------------------------------------------------------------------------------
+// -- vrm ------------------------------------------------------------------------------------------
 let currentVRM = undefined;
 
 function initVRM( gltf ) {
   THREE.VRM.from( gltf ).then( ( vrm ) => {
-    scene.add( vrm.scene ); // gltfのモデルをsceneに追加
-    currentVRM = vrm; // currentGLTFにvrmを代入
+    scene.add( vrm.scene );
+    currentVRM = vrm;
 
-    const head = vrm.humanoid.getBoneNode( THREE.VRMSchema.HumanoidBoneName.Head ); // vrmの頭を参照する
-    camera.position.set( 0.0, head.getWorldPosition(new THREE.Vector3()).y, 2.0 ); // カメラを頭が中心に来るように動かす
+    const head = vrm.humanoid.getBoneNode( THREE.VRMSchema.HumanoidBoneName.Head );
+    camera.position.set( 0.0, head.getWorldPosition(new THREE.Vector3()).y, 2.0 );
   } );
 }
 
-const loader = new THREE.GLTFLoader(); // vrmをGLTFLoaderで読み込む
-loader.load( // モデルを読み込む
-  'https://cdn.glitch.com/e9accf7e-65be-4792-8903-f44e1fc88d68%2Fthree-vrm-girl.vrm?v=1568881824654', // モデルデータのURL
-  ( gltf ) => { initVRM( gltf ); }, // モデルが読み込まれたあとの処理
-  ( progress ) => { console.info( ( 100.0 * progress.loaded / progress.total ).toFixed( 2 ) + '% loaded' ); }, // モデル読み込みの進捗を表示
-  ( error ) => { console.error( error ); } // モデル読み込み時のエラーを表示
+const loader = new THREE.GLTFLoader();
+loader.load(
+  'https://cdn.glitch.com/e9accf7e-65be-4792-8903-f44e1fc88d68%2Fthree-vrm-girl.vrm?v=1605264912635',
+  ( gltf ) => { initVRM( gltf ); },
+  ( progress ) => { console.info( ( 100.0 * progress.loaded / progress.total ).toFixed( 2 ) + '% loaded' ); },
+  ( error ) => { console.error( error ); }
 );
 
 // -- light ----------------------------------------------------------------------------------------
@@ -50,10 +50,10 @@ function update() {
 
   const delta = clock.getDelta();
 
-  if ( currentVRM ) { // VRMが読み込まれていれば
-    currentVRM.scene.rotation.y = Math.PI * Math.sin( clock.getElapsedTime() ); // VRMを回転する
+  if ( currentVRM ) {
+    currentVRM.scene.rotation.y = Math.PI * Math.sin( clock.getElapsedTime() );
 
-    currentVRM.update( delta ); // VRMの各コンポーネントを更新
+    currentVRM.update( delta );
   }
 
   renderer.render( scene, camera );
