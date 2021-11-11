@@ -16,7 +16,7 @@ camera.position.set( 0.0, 0.0, 5.0 );
 // -- scene ----------------------------------------------------------------------------------------
 const scene = new THREE.Scene();
 
-// -- avocado (gltf) -------------------------------------------------------------------------------
+// -- vrm ------------------------------------------------------------------------------------------
 let currentVRM = undefined; // 現在使用中のvrm、update内で使えるようにするため
 
 function initVRM( modelUrl ) { // モデルが読み込まれたあとの処理
@@ -36,7 +36,7 @@ function initVRM( modelUrl ) { // モデルが読み込まれたあとの処理
   } );
 }
 
-const modelUrl = 'https://cdn.glitch.com/e9accf7e-65be-4792-8903-f44e1fc88d68%2Fthree-vrm-girl.vrm?v=1568881824654'; // モデルのURL
+const modelUrl = 'https://cdn.glitch.me/c4e5cfb3-513e-4d82-a37f-62836378466b%2Fthree-vrm-girl-1.0-beta.vrm?v=1636610288920'; // モデルのURL
 initVRM( modelUrl );
 
 // -- light ----------------------------------------------------------------------------------------
