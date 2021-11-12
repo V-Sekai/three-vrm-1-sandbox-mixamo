@@ -1,4 +1,4 @@
-/* global THREE, THREE_VRM */
+/* global THREE, THREE_VRM, loadMixamoAnimation */
 
 const width = window.innerWidth;
 const height = window.innerHeight;
@@ -38,6 +38,9 @@ function initVRM( modelUrl ) { // モデルが読み込まれたあとの処理
 
 const modelUrl = 'https://cdn.glitch.me/c4e5cfb3-513e-4d82-a37f-62836378466b%2Fthree-vrm-girl-1.0-beta.vrm?v=1636610288920'; // モデルのURL
 initVRM( modelUrl );
+
+const animationUrl = 'https://cdn.glitch.me/16b81be8-1f14-4a44-b78f-c3f6da842ee7%2FDancing.fbx?v=1636700945719';
+loadMixamoAnimation( animationUrl );
 
 // -- light ----------------------------------------------------------------------------------------
 const light = new THREE.DirectionalLight( 0xffffff );
