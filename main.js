@@ -24,7 +24,7 @@ function initVRM( modelUrl ) { // モデルが読み込まれたあとの処理
   
   loader.register( ( parser ) => new THREE_VRM.VRMLoaderPlugin( parser ) ); // GLTFLoaderにVRMLoaderPluginをインストール
   
-  loader.loadAsync( modelUrl ).then( ( gltf ) => {
+  return loader.loadAsync( modelUrl ).then( ( gltf ) => {
     const vrm = gltf.userData.vrm; // VRMを制御するためのクラス `VRM` が `gltf.userData.vrm` に入っています
     scene.add( vrm.scene ); // モデルをsceneに追加し、表示できるようにする
     currentVRM = vrm; // currentGLTFにvrmを代入
@@ -33,14 +33,17 @@ function initVRM( modelUrl ) { // モデルが読み込まれたあとの処理
 
     const head = vrm.humanoid.getBoneNode( 'head' ); // vrmの頭を参照する
     camera.position.set( 0.0, head.getWorldPosition(new THREE.Vector3()).y, 2.0 ); // カメラを頭が中心に来るように動かす
+    
+    return vrm;
   } );
 }
 
 const modelUrl = 'https://cdn.glitch.me/c4e5cfb3-513e-4d82-a37f-62836378466b%2Fthree-vrm-girl-1.0-beta.vrm?v=1636610288920'; // モデルのURL
-initVRM( modelUrl );
-
 const animationUrl = 'https://cdn.glitch.me/16b81be8-1f14-4a44-b78f-c3f6da842ee7%2FDancing.fbx?v=1636700945719';
-loadMixamoAnimation( animationUrl );
+
+initVRM( modelUrl ).then( ( vrm ) => {
+  loadMixamoAnimation( animationUrl, vrm );
+} );
 
 // -- light ----------------------------------------------------------------------------------------
 const light = new THREE.DirectionalLight( 0xffffff );
