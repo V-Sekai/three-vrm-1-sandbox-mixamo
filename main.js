@@ -18,9 +18,9 @@ const scene = new THREE.Scene();
 
 // -- vrm ------------------------------------------------------------------------------------------
 let currentVRM = undefined; // 現在使用中のvrm、update内で使えるようにするため
-let currentMixer = undefined;
+let currentMixer = undefined; // 現在使用中のAnimationMixer、update内で使えるようにするため
 
-function initVRM( modelUrl ) { // モデルが読み込まれたあとの処理
+function initVRM( modelUrl ) { // モデルを読み込む処理
   const loader = new THREE.GLTFLoader(); // GLTFを読み込むLoader
   
   loader.register( ( parser ) => new THREE_VRM.VRMLoaderPlugin( parser ) ); // GLTFLoaderにVRMLoaderPluginをインストール
@@ -29,7 +29,6 @@ function initVRM( modelUrl ) { // モデルが読み込まれたあとの処理
     const vrm = gltf.userData.vrm; // VRMを制御するためのクラス `VRM` が `gltf.userData.vrm` に入っています
     scene.add( vrm.scene ); // モデルをsceneに追加し、表示できるようにする
     currentVRM = vrm; // currentGLTFにvrmを代入
-    console.log( vrm );
     
     THREE_VRM.VRMUtils.rotateVRM0( vrm ); // 読み込んだモデルがVRM0.0の場合
 
@@ -41,13 +40,15 @@ function initVRM( modelUrl ) { // モデルが読み込まれたあとの処理
 }
 
 const modelUrl = 'https://cdn.glitch.me/c4e5cfb3-513e-4d82-a37f-62836378466b%2Fthree-vrm-girl-1.0-beta.vrm?v=1636610288920'; // モデルのURL
-const animationUrl = 'https://cdn.glitch.me/16b81be8-1f14-4a44-b78f-c3f6da842ee7%2FDancing%20(1).fbx?v=1636707337661';
+const animationUrl = 'https://cdn.glitch.me/16b81be8-1f14-4a44-b78f-c3f6da842ee7%2FGangnam%20Style.fbx?v=1636708670740'; // MixamoのアニメーションのURL
 
-initVRM( modelUrl ).then( ( vrm ) => {
-  currentMixer = new THREE.AnimationMixer( vrm.scene );
+// See: https://threejs.org/docs/#manual/en/introduction/Animation-system
+initVRM( modelUrl ).then( ( vrm ) => { // vrmを読み込む
+  currentMixer = new THREE.AnimationMixer( vrm.scene ); // vrmのAnimationMixerを作る
+  currentMixer.timeScale = 4; // 早回しにする
   
-  loadMixamoAnimation( animationUrl, vrm ).then( ( clip ) => {
-    currentMixer.clipAction( clip ).play();
+  loadMixamoAnimation( animationUrl, vrm ).then( ( clip ) => { // アニメーションを読み込む
+    currentMixer.clipAction( clip ).play(); // アニメーションをMixerに適用してplay
   } );
 } );
 
@@ -63,16 +64,16 @@ clock.start();
 function update() {
   requestAnimationFrame( update );
 
-  const delta = clock.getDelta();
+  const delta = clock.getDelta(); // 前フレームとの差分時間を取得
+  
+  if ( currentMixer ) { // アニメーションが読み込まれていれば
+    currentMixer.update( delta ); // アニメーションをアップデート
+  }
 
   if ( currentVRM ) { // VRMが読み込まれていれば
     currentVRM.update( delta ); // VRMの各コンポーネントを更新
   }
-  
-  if ( currentMixer ) {
-    currentMixer.update( delta );
-  }
 
-  renderer.render( scene, camera );
+  renderer.render( scene, camera ); // 描画
 };
 update();

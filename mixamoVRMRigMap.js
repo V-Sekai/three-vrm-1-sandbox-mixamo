@@ -1,3 +1,6 @@
+/**
+ * Mixamoのリグ名をVRMのHumanoidボーン名に変換する
+ */
 const mixamoVRMRigMap = {
   'mixamorigHips': 'hips',
   'mixamorigSpine': 'spine',

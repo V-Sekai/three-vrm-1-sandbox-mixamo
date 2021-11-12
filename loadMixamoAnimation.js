@@ -1,5 +1,8 @@
 /* global THREE, THREE_VRM, mixamoVRMRigMap */
 
+/**
+ * Mixamoのアニメーションを読み込み、
+ */
 function loadMixamoAnimation( url, vrm ) {
   const loader = new THREE.FBXLoader();
   return loader.loadAsync( url ).then( ( asset ) => {
