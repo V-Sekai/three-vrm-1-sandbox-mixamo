@@ -6,11 +6,12 @@
 function loadMixamoAnimation( url, vrm ) {
   const loader = new THREE.FBXLoader(); // FBXを読み込むLoader
   return loader.loadAsync( url ).then( ( asset ) => {
-    const clip = THREE.AnimationClip.findByName( asset.animations, 'mixamo.com' );
-    
-    const tracks = [];
+    const clip = THREE.AnimationClip.findByName( asset.animations, 'mixamo.com' ); // AnimationClipを抽出する
+
+    const tracks = []; // VRM用のKeyframeTrackをこの配列に格納する
 
     clip.tracks.forEach( ( track ) => {
+      // 各TrackをVRM向けに変換し、 `tracks` に格納する
       const trackSplitted = track.name.split( '.' );
       const mixamoRigName = trackSplitted[ 0 ];
       const vrmBoneName = mixamoVRMRigMap[ mixamoRigName ];
