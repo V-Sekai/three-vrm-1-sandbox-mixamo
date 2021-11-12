@@ -4,9 +4,9 @@
  * Mixamoのアニメーションを読み込み、
  */
 function loadMixamoAnimation( url, vrm ) {
-  const loader = new THREE.FBXLoader();
+  const loader = new THREE.FBXLoader(); // FBXを読み込むLoader
   return loader.loadAsync( url ).then( ( asset ) => {
-    const clip = asset.animations.find( ( clip ) => clip.name === 'mixamo.com' );
+    const clip = THREE.AnimationClip.findByName( asset.animations, 'mixamo.com' );
     
     const tracks = [];
 
