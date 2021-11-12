@@ -11,25 +11,26 @@ function loadMixamoAnimation( url, vrm ) {
       const trackSplitted = track.name.split( '.' );
       const mixamoRigName = trackSplitted[ 0 ];
       const vrmBoneName = mixamoVRMRigMap[ mixamoRigName ];
-      const propertyName = trackSplitted[ 1 ];
+      const vrmNodeName = vrm.humanoid?.getBoneNode( vrmBoneName )?.name;
       
-      if ( track instanceof THREE.QuaternionKeyframeTrack ) {
-        tracks.push( new THREE.QuaternionKeyframeTrack(
-          `${ vrmBoneName }.${ propertyName }`,
-          track.times,
-          track.values,
-        ) );
-      } else if ( track instanceof THREE.VectorKeyframeTrack ) {
-        tracks.push( new THREE.VectorKeyframeTrack(
-          `${ vrmBoneName }.${ propertyName }`,
-          track.times,
-          track.values,
-        ) );
+      if ( vrmNodeName != null ) {
+        const propertyName = trackSplitted[ 1 ];
+
+        if ( track instanceof THREE.QuaternionKeyframeTrack ) {
+          tracks.push( new THREE.QuaternionKeyframeTrack(
+            `${ vrmNodeName }.${ propertyName }`,
+            track.times,
+            track.values,
+          ) );
+        } else if ( track instanceof THREE.VectorKeyframeTrack ) {
+          tracks.push( new THREE.VectorKeyframeTrack(
+            `${ vrmNodeName }.${ propertyName }`,
+            track.times,
+            track.values,
+          ) );
+        }
       }
     } );
-    
-    console.log(tracks);
-    console.log(vrm);
     
     return new THREE.AnimationClip( 'vrmAnimation', clip.duration, tracks );
   } );
