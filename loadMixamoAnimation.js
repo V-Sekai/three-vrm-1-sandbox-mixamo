@@ -26,7 +26,7 @@ function loadMixamoAnimation( url, vrm ) {
           tracks.push( new THREE.VectorKeyframeTrack(
             `${ vrmNodeName }.${ propertyName }`,
             track.times,
-            track.values,
+            track.values.map( ( v ) => v * 0.01 ),
           ) );
         }
       }
