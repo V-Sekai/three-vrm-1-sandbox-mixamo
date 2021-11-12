@@ -42,7 +42,11 @@ const modelUrl = 'https://cdn.glitch.me/c4e5cfb3-513e-4d82-a37f-62836378466b%2Ft
 const animationUrl = 'https://cdn.glitch.me/16b81be8-1f14-4a44-b78f-c3f6da842ee7%2FDancing.fbx?v=1636700945719';
 
 initVRM( modelUrl ).then( ( vrm ) => {
-  loadMixamoAnimation( animationUrl, vrm );
+  const mixer = new THREE.AnimationMixer( vrm.scene );
+  
+  loadMixamoAnimation( animationUrl, vrm ).then( ( clip ) => {
+    
+  } );
 } );
 
 // -- light ----------------------------------------------------------------------------------------
