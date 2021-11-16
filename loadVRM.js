@@ -2,6 +2,8 @@
 
 /**
  * VRMを読み込む
+ * @param {string} modelUrl モデルファイルのURL
+ * @returns {Promise<VRM>} VRM
  */
 function loadVRM( modelUrl ) { // モデルを読み込む処理
   const loader = new THREE.GLTFLoader(); // GLTFを読み込むLoader

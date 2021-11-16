@@ -1,7 +1,10 @@
 /* global THREE, THREE_VRM, mixamoVRMRigMap */
 
 /**
- * Mixamoのアニメーションを読み込み、
+ * Mixamoのアニメーションを読み込み、VRM向けに調整して返す
+ * @param {string} url Mixamoのモーションが入ったURL
+ * @param {VRM} vrm VRMモデル
+ * @returns {Promise<THREE.AnimationClip>} AnimationClip
  */
 function loadMixamoAnimation( url, vrm ) {
   const loader = new THREE.FBXLoader(); // FBXを読み込むLoader
