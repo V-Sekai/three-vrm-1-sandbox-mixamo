@@ -27,13 +27,17 @@ function loadMixamoAnimation( url, vrm ) {
           tracks.push( new THREE.QuaternionKeyframeTrack(
             `${ vrmNodeName }.${ propertyName }`,
             track.times,
-            track.values,
+            track.values.map( ( v, i ) => (
+              ( vrm.meta?.metaVersion === '0' && ( i % 2 ) === 0 ) ? -v : v
+            ) ),
           ) );
         } else if ( track instanceof THREE.VectorKeyframeTrack ) {
           tracks.push( new THREE.VectorKeyframeTrack(
             `${ vrmNodeName }.${ propertyName }`,
             track.times,
-            track.values.map( ( v ) => v * 0.01 ),
+            track.values.map( ( v, i ) => (
+              ( ( vrm.meta?.metaVersion === '0' && ( i % 3 ) !== 1 ) ? -v : v ) * 0.01
+            ) ),
           ) );
         }
       }
