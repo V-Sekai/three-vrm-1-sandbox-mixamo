@@ -1,0 +1,34 @@
+# git checkout gh-pages
+# touch .nojekyll
+# git add .nojekyll
+# git commit -m "Add .nojekyll for pages"
+# git push
+#
+# Finally, you can enable your GitHub page:
+#
+#     On GitHub, go to Settings > GitHub Pages
+#     Select the gh-pages branch as the "Source"
+#     Then, select the / (root) folder
+#
+# You should now be able to see your pages at https://<username>.github.io/<repository>/. It will be re-built and published every time you push on master.
+
+name: Publish Pages
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+        with:
+          persist-credentials: false # required by JamesIves/github-pages-deploy-action
+          fetch-depth: 0 # may be required to work correctly (needs the whole Git history)
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: .
