@@ -37,7 +37,7 @@ loadVRM( modelUrl ).then( ( vrm ) => { // vrmを読み込む
   camera.position.set( 0.0, head.getWorldPosition( new THREE.Vector3() ).y, 6.0 ); // カメラを頭が中心に来るように動かす
 
   currentMixer = new THREE.AnimationMixer( vrm.scene ); // vrmのAnimationMixerを作る
-  currentMixer.timeScale = 4; // 早回しにする
+  currentMixer.timeScale = 1;
   
   loadMixamoAnimation( animationUrl, vrm ).then( ( clip ) => { // アニメーションを読み込む
     currentMixer.clipAction( clip ).play(); // アニメーションをMixerに適用してplay
