@@ -2,6 +2,10 @@
 
 [Mixamo](https://www.mixamo.com/) のモーションを読み込み、VRMモデルを動かすexampleです。
 
+## Origins
+
+Originally hosted at https://glitch.com/edit/#!/three-vrm-1-sandbox-mixamo
+
 ## ファイル構成
 
 - `README.md` - 説明書。このファイル
