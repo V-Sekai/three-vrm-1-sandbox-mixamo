@@ -2,7 +2,7 @@
 
 [Mixamo](https://www.mixamo.com/) のモーションを読み込み、VRMモデルを動かすexampleです。
 
-## Origins
+## Reference
 
 Originally hosted at https://glitch.com/edit/#!/three-vrm-1-sandbox-mixamo
 
